@@ -1,0 +1,61 @@
+<link rel="import" href="/bower_components/polymer/lib/mixins/property-effects.html">
+
+<template id="pe-template">
+    <style>
+        :host {
+            display: block;
+            font-size: 30px;
+        }
+        span {
+            margin-left: 10px;
+        }
+        button {
+            background: transparent;
+            font-size: inherit;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <button on-click="increment">🔝</button>
+    <span>[[display(counter)]]</span>
+</template>
+
+<script>
+    // Element class mixin that provides meta-programming for Polymer's template binding and data observation system.
+    class PropEffectsElement extends Polymer.PropertyEffects(HTMLElement) {
+        static get observedAttributes() { return ['counter', 'limit']; }
+
+        constructor() {
+            super();
+            this.counter = 0;
+            this.limit = 10;
+        }
+
+        connectedCallback() {
+            // Enable properties.
+            this._enableProperties();
+        }
+
+        ready() {
+            var template = document.currentScript.ownerDocument.getElementById('pe-template');
+            this.dom = this._stampTemplate(template);
+            this.attachShadow({mode: 'open'}).appendChild(this.dom);
+            super.ready();
+        }
+
+        increment() {
+            this.counter = Math.min(parseInt(this.counter)+1, this.limit);
+        }
+
+        display(c) {
+            return '🍺'.repeat(c);
+        }
+    }
+
+    PropEffectsElement.createPropertiesForAttributes();
+    // Specify reflected property
+    PropEffectsElement.createReflectedProperty('counter');
+
+    // Register element.
+    customElements.define('prop-effects', PropEffectsElement);
+</script>

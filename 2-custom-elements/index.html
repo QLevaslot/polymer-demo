@@ -1,0 +1,13 @@
+<html>
+<body>
+<hello-world />
+<script>
+    class HelloWorld extends HTMLElement {
+        connectedCallback() {
+            this.attachShadow({mode:'open'}).innerHTML = 'Web components are native! &#x1F680';
+        }
+    }
+    customElements.define('hello-world', HelloWorld);
+</script>
+</body>
+</html>

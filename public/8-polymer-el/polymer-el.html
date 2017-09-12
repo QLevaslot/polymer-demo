@@ -1,0 +1,57 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+
+<dom-module id="polymer-el">
+    <template>
+        <style>
+            :host {
+                display: block;
+                font-size: 30px;
+            }
+
+            span {
+                margin-left: 10px;
+            }
+
+            button {
+                background: transparent;
+                font-size: inherit;
+                border: none;
+                cursor: pointer;
+            }
+        </style>
+        <button id="b" on-click="increment">🔝</button>
+        <span>[[display(counter)]]</span>
+    </template>
+
+    <script>
+      class PolyElement extends Polymer.Element {
+        static get is() {
+          return 'polymer-el';
+        }
+
+        static get properties() {
+          return {
+            counter: {type: Number, reflectToAttribute: true},
+            limit: {notify: true, type: Number}
+          }
+        }
+
+        constructor() {
+          super();
+          this.counter = 0;
+          this.limit = 10;
+        }
+
+        increment() {
+          this.counter = Math.min(this.counter + 1, this.limit);
+        }
+
+        display(c) {
+          return '🍻'.repeat(c);
+        }
+      }
+
+      // Register element.
+      customElements.define('polymer-el', PolyElement);
+    </script>
+</dom-module>

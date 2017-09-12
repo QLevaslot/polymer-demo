@@ -1,0 +1,67 @@
+<link rel="import" href="/bower_components/polymer/lib/mixins/property-accessors.html">
+<link rel="import" href="/bower_components/polymer/lib/mixins/template-stamp.html">
+
+<template id="ts-template">
+    <style>
+        :host {
+            display: block;
+            font-size: 30px;
+        }
+        span {
+            margin-left: 10px;
+        }
+        button {
+            background: transparent;
+            font-size: inherit;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <button on-click="increment">🔝</button><!-- on-click thanks to templating -->
+    <span id="output"></span>
+</template>
+
+<script>
+    // Element class mixin that provides basic template parsing and stamping
+    class TemplateStampElement extends Polymer.TemplateStamp(Polymer.PropertyAccessors(HTMLElement)) {
+        static get observedAttributes() { return ['counter', 'limit']; }
+
+        constructor() {
+            super();
+            this.counter = 0;
+            this.limit = 10;
+        }
+
+        connectedCallback() {
+            this._enableProperties();
+        }
+
+        ready() {
+            var template = document.currentScript.ownerDocument.getElementById('ts-template');
+            var dom = this._stampTemplate(template);
+            this.$ = dom.$;
+            this.attachShadow({mode: 'open'}).appendChild(dom);
+            super.ready();
+        }
+
+        increment() {
+            this.counter = Math.min(parseInt(this.counter)+1, this.limit);
+        }
+
+        display() {
+            // Easy selection of template element
+            this.$.output.innerHTML = '🍺'.repeat(this.counter);
+        }
+
+        _propertiesChanged(currentProps, changedProps, oldProps) {
+            if ('counter' in changedProps) {
+                this.setAttribute('counter', changedProps.counter);
+                this.display();
+            }
+        }
+    }
+
+    TemplateStampElement.createPropertiesForAttributes();
+
+    customElements.define('templ-stamp', TemplateStampElement);
+</script>

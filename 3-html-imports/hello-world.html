@@ -1,0 +1,21 @@
+<template id="template">
+    <style>
+        #name {
+            color: green;
+        }
+    </style>
+    <h1>Hello <span id="name"></span>! 🤖</h1>
+</template>
+<script>
+    var helloDoc = document.currentScript.ownerDocument; // helloDoc is hello-world.html and not index.html
+    class HelloWorld extends HTMLElement {
+        connectedCallback() {
+            var template = helloDoc.querySelector('#template');
+            var clone = document.importNode(template.content, true);// clone node from external source, with children
+            var name = this.getAttribute('name') || 'Olivier';
+            clone.querySelector('#name').innerText = name;
+            this.attachShadow({mode:'open'}).appendChild(clone);
+        }
+    }
+    customElements.define('hello-world', HelloWorld);
+</script>

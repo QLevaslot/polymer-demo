@@ -1,0 +1,67 @@
+<link rel="import" href="/bower_components/polymer/lib/mixins/property-accessors.html">
+
+<script>
+  // Element class mixin for reacting to property changes from generated property accessors.
+  class PropertyAccessorsElement extends Polymer.PropertyAccessors {
+    static get observedAttributes() {
+      return ['counter', 'limit'];
+    }
+
+    constructor() {
+      super();
+      this.counter = 0;
+      this.limit = 10;
+      this.attachShadow({mode: 'open'});
+    }
+
+    connectedCallback() {
+      this._enableProperties();  // Enable properties.
+    }
+
+    ready() {
+      this.render();
+      super.ready();
+    }
+
+    increment() {
+      this.counter = Math.min(parseInt(this.counter) + 1, this.limit);
+    }
+
+    display() {
+      this.output.innerHTML = '🍺'.repeat(this.counter);
+    }
+
+    // React to changes.
+    _propertiesChanged(currentProps, changedProps, oldProps) {
+      if ('counter' in changedProps) { // Only reflect this.
+        this.setAttribute('counter', changedProps.counter);
+        this.display();
+      }
+    }
+
+    render() {
+      var button = document.createElement('button');
+      button.innerHTML = '🔝';
+      button.addEventListener('click', this.increment.bind(this));
+      this.shadowRoot.appendChild(button);
+
+      this.output = document.createElement('span');
+      this.shadowRoot.appendChild(this.output);
+
+      // Some styles for pretty.
+      this.style.display = 'block';
+      this.style.fontSize = '30px';
+      this.output.style.marginLeft = '10px';
+      button.style.background = 'transparent';
+      button.style.fontSize = 'inherit';
+      button.style.border = 'none';
+      button.style.cursor = 'pointer';
+    }
+  }
+
+  // Generate property accessors for all observed attributes.
+  PropertyAccessorsElement.createPropertiesForAttributes();
+
+  // Register element.
+  customElements.define('prop-access', PropertyAccessorsElement);
+</script>

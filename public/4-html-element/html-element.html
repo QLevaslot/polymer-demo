@@ -1,0 +1,73 @@
+<script>
+  class MyHTMLElement extends HTMLElement {
+    static get observedAttributes() { return ['counter', 'limit']; }
+  
+    constructor() {
+      super();
+      this._counter = 0;
+      this.limit = 10;
+      // You could also do this once in connectedCallback instead.
+      this.attachShadow({mode: 'open'});
+    }
+    
+    connectedCallback() {
+      if (!this._readied)
+        this.render();
+    }
+    
+    increment() {
+      this.counter = Math.min(this.counter + 1, this.limit);
+    }
+    
+    display() {
+      this.output.innerHTML = '🍺'.repeat(this.counter);
+    }
+
+    // Properties are the source of truth:
+    get counter() { return this._counter; }
+    set counter(value) { 
+      if (value != this._counter) {
+        this._counter = parseInt(value);
+        this.setAttribute('counter', value);
+      }
+      if (this._readied)
+        this.display();
+    }
+    
+    get limit() { return this._limit; }
+    set limit(value) { 
+      if (value != this._limit) {
+        this._limit = value;  // Do not reflect
+      }
+    }
+  
+    attributeChangedCallback(attr, oldValue, newValue) {
+      if (oldValue !== newValue) {
+        this[attr] = newValue;
+      }
+    }
+    
+    render() {
+      this._readied = true;
+      var button = document.createElement('button');   
+      button.innerHTML = '🔝';
+      button.addEventListener('click', this.increment.bind(this));
+      this.shadowRoot.appendChild(button);  
+
+      this.output = document.createElement('span');
+      this.shadowRoot.appendChild(this.output);
+
+      // Some styles for pretty.
+      this.style.display = 'block';
+      this.style.fontSize = '30px';
+      this.output.style.marginLeft = '10px';
+      button.style.background = 'transparent';
+      button.style.fontSize = 'inherit';
+      button.style.border = 'none';
+      button.style.cursor = 'pointer';
+    }
+  }
+
+  // Register element
+  customElements.define('html-element', MyHTMLElement);
+</script>

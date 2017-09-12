@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>polymer mixins</title>
+    <meta name="description" content="">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+
+    <link rel="import" href="/4-html-element/html-element.html">
+    <link rel="import" href="/5-prop-access/prop-access.html">
+    <link rel="import" href="/6-templ-stamp/templ-stamp.html">
+    <link rel="import" href="/7-prop-effects/prop-effects.html">
+    <link rel="import" href="/8-polymer-el/polymer-el.html">
+    <!--<link rel="import" href="/examples/inheritance-el.html">-->
+    <!--<link rel="import" href="/examples/no-shadow.html">-->
+    <!--<link rel="import" href="/examples/templ-string.html">-->
+
+</head>
+<body>
+<header>
+    <h1>Polymer 2.0 examples  <div class="glitchButton"></div></h1>
+</header>
+
+<div class="example">
+    <h2>HTMLElement</h2>
+    <html-element limit="5"></html-element>
+    <html-element counter="3"></html-element>
+</div>
+
+<div class="example">
+    <h2>Property Accessors</h2>
+    <prop-access limit="5"></prop-access>
+    <prop-access counter="3"></prop-access>
+</div>
+
+<div class="example">
+    <h2>Template Stamp</h2>
+    <templ-stamp limit="5"></templ-stamp>
+    <templ-stamp counter="3"></templ-stamp>
+</div>
+
+<div class="example">
+    <h2>Property Effects</h2>
+    <prop-effects limit="5"></prop-effects>
+    <prop-effects counter="3"></prop-effects>
+</div>
+
+<div class="example">
+    <h2>Polymer.Element</h2>
+    <polymer-el limit="5"></polymer-el>
+    <polymer-el counter="3"></polymer-el>
+</div>
+
+<!--<div class="example">-->
+    <!--<h2>Inheritance</h2>-->
+    <!--<inheritance-el limit="5"></inheritance-el>-->
+    <!--<inheritance-el counter="3"></inheritance-el>-->
+<!--</div>-->
+
+<!--<div class="example">-->
+    <!--<h2>No Shadow Root</h2>-->
+    <!--&lt;!&ndash; since the element only inherits a :host style but doesn't have a shadow-->
+      <!--root, we need to fix the style &ndash;&gt;-->
+    <!--<style>-->
+        <!--no-shadow {-->
+            <!--display: block;-->
+            <!--font-size: 30px;-->
+        <!--}-->
+    <!--</style>-->
+    <!--<no-shadow limit="5"></no-shadow>-->
+    <!--<no-shadow counter="3"></no-shadow>-->
+<!--</div>-->
+
+<!--<div class="example">-->
+    <!--<h2>Template String, (one day: no HTML Imports)</h2>-->
+    <!--<templ-string limit="5"></templ-string>-->
+    <!--<templ-string counter="3"></templ-string>-->
+<!--</div>-->
+
+</body>
+</html>

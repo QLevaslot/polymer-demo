@@ -1,0 +1,19 @@
+<html>
+<head>
+    <style>
+        h1 {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>This h1 has style.</h1>
+    <div id="hello-world"></div>
+    <script>
+        var root = document.getElementById("hello-world").createShadowRoot();
+        var content = document.createElement("h1");
+        content.innerText = "This h1 has no style";
+        root.appendChild(content);
+</script>
+</body>
+</html>
